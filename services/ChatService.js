@@ -8,9 +8,9 @@ const MailingService = require('../services/MailingService');
 const User = require('../models/User');
 
 class ChatService {
-  async proceedMessage(messageData) {
-    const { From: from, Body: body } = messageData;
-    const messageType = TwilioService.getMessageType(messageData);
+  async proceedMessage(messageBody) {
+    const { From: from, Body: body } = messageBody;
+    const messageType = TwilioService.getMessageType(messageBody);
     const user = await User.get(from);
     const step = user.step || 0;
 
@@ -29,7 +29,7 @@ class ChatService {
           }
 
           if (messageType === 'mms') {
-            const files = TwilioService.parseMMSMedia(body);
+            const files = TwilioService.parseMMSMedia(messageBody);
             const links = await DropboxService.uploadFiles(files, `${newUser.id}_${newUser.phone}`);
             await User.update({ ...newUser, step: 1, firstMessage: links.join(', ') });
           }
@@ -92,7 +92,7 @@ class ChatService {
           }
 
           if (user.branch === 'sms' && messageType === 'mms') {
-            const files = TwilioService.parseMMSMedia(body);
+            const files = TwilioService.parseMMSMedia(messageBody);
             const links = await DropboxService.uploadFiles(files, `${user.id}_${user.phone}`);
             await User.update({ ...user, step: 4, reason: links.join(', ') });
           }
