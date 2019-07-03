@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const twilio = require('twilio');
+const MessagingResponse = require('twilio').twiml.MessagingResponse;
 
 const ChatService = require('../services/ChatService');
 const ReportService = require('../services/ReportService');
 
 router.post('/receive', async function (req, res, next) {
-  const twiml = new twilio.TwimlResponse();
+  const twiml = new MessagingResponse();
 
   twiml.message('');
 
