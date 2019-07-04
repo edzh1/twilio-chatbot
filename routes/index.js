@@ -21,10 +21,11 @@ router.post('/receive', async function (req, res, next) {
 
 router.get('/generate-report', async function (req, res, next) {
   try {
+    const filename = 'report';
     const result = await ReportService.generateCSV();
 
     res.set('Content-Type', 'text/csv');
-    res.set("Content-Disposition", 'attachment; filename=neighborhood_association.csv');
+    res.set("Content-Disposition", `attachment; filename=${filename}.csv`);
     res.status(200).send(result)
   } catch (error) {
     res.status(500).send('Something went wrong')
