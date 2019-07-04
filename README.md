@@ -20,7 +20,7 @@ docker run -p 80:3000 -d edzh1/twilio-chatbot
 ```
 
 ## What does it do now (step by step):
-> Every step starts from receiving an SMS to `SERVICE_NUMBER`. Data is saved in DB after each step
+> Every step starts from receiving an SMS to `SERVICE_NUMBER` (Twilio should use `POST` webhook to `your-chatbot-domain/receive`). Data is saved in DB after each step
 * creates new User, saves in DB, asks for a name (saves media to Dropbox, if a user has sent MMS)
 * saves user name, asks for an address
 * asks a user to describe what do they want to report to city council
