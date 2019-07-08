@@ -5,4 +5,4 @@ RUN npm ci --only=production
 RUN npm i -g pm2
 COPY . .
 EXPOSE 3000
-CMD ["pm2-runtime", "./bin/www"]
+CMD ["pm2-runtime", "ecosystem.config.js"]
